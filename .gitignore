@@ -1,0 +1,33 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Streamlit and local tooling
+.streamlit/secrets.toml
+.vscode/
+
+# Generated simulation outputs
+data/synthetic_predictions.xlsx
+data/*.xlsx
+data/*.html
+data/crewai_executive_report.md
+data/Executive_Supply_Chain_Report.pdf
+
+# OS files
+.DS_Store
+Thumbs.db
+
+Steps
+

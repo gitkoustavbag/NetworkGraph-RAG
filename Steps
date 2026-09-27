@@ -1,0 +1,15 @@
+python -m venv .venv
+
+.\.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+
+streamlit run app.py
+
+
+git add .
+git commit -m "Prepare GraphRAG project for GitHub"
+git branch -M main
+git remote add origin https://github.com/<username>/<repository>.git
+git push -u origin main
+

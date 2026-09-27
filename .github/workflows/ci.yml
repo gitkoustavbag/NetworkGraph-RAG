@@ -1,0 +1,62 @@
+name: GraphRAG quality checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate Python and demo data
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Compile Python sources
+        run: python -m compileall -q .
+
+      - name: Generate deterministic demo workbook
+        run: python generate_data.py
+
+      - name: Verify workbook contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import pandas as pd
+
+          workbook = Path("data/supply_chain.xlsx")
+          expected_sheets = {
+              "Suppliers": 7,
+              "Shipments": 8,
+              "Incidents": 5,
+              "InventoryLevels": 3,
+              "TransportRoutes": 5,
+              "ContractTerms": 7,
+          }
+
+          actual_sheets = set(pd.ExcelFile(workbook).sheet_names)
+          assert actual_sheets == set(expected_sheets), (
+              f"Unexpected sheets: {actual_sheets}"
+          )
+          for sheet, expected_rows in expected_sheets.items():
+              rows = len(pd.read_excel(workbook, sheet_name=sheet))
+              assert rows == expected_rows, (
+                  f"{sheet}: expected {expected_rows} rows, found {rows}"
+              )
+          print(f"Validated {workbook} with {len(actual_sheets)} sheets.")
+          PY

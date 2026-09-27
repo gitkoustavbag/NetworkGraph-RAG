@@ -1,0 +1,11 @@
+streamlit>=1.35.0
+openai>=1.30.0
+pydantic>=2.7.0
+pandas>=2.2.0
+openpyxl>=3.1.2
+python-dotenv>=1.0.1
+scipy>=1.13.0
+reportlab
+networkx>=3.3
+pyvis>=0.3.2
+crewai>=0.80.0
