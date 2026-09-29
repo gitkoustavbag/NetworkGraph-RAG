@@ -25,9 +25,12 @@ data/*.html
 data/crewai_executive_report.md
 data/Executive_Supply_Chain_Report.pdf
 
+# Local documentation and working notes
+PROJECT_IMPROVEMENT_PLAN.md
+Steps.md
+
 # OS files
 .DS_Store
 Thumbs.db
 
-Steps
 
